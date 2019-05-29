@@ -2,6 +2,6 @@
 
 >  What is **<i>'TRIVIAL PROJECT'</i>**?
 
-This is my simple android project.
+This is my simple Android project that I develop while studying Kotlin.
 
 (ex. Calculator, Memo, To-Do List ... )
