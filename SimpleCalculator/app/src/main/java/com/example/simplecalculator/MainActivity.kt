@@ -23,6 +23,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var btnDot: Button
     lateinit var btnPlus: Button
     lateinit var btnMinus: Button
+    lateinit var btnMultiply: Button
+    lateinit var btnDivision: Button
     lateinit var btnEquals: Button
     var operator: String = ""       //연산자 저장
     var operand: String = ""        //피연산자 저장
@@ -38,12 +40,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         var result: String = txtResult.text.toString()
-        if (result.length == 1 && result.equals("0")) {
+        if (result.equals("0") && operator.isEmpty()) {
             operand = ""
         }
 
         when (v.id) {
-            R.id.btn_zero -> if (operand.isNotEmpty()) {
+            R.id.btn_zero -> {
                 operand += "0"
                 txtResult.text = operand
             }
@@ -84,6 +86,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 txtResult.text = operand
             }
             R.id.btn_clear -> {
+                operator = ""
                 operand = "0"
                 txtResult.text = operand
                 calculationResult = 0
@@ -116,16 +119,24 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 operator = "-"
                 operand = ""
             }
-            //TODO: 연산자 계산
+            R.id.btn_multiply -> {
+                if (operator.isNotEmpty() && operand.isNotEmpty()) {
+                    calculate()
+                    txtResult.text = calculationResult.toString()
+                } else if (operand.isNotEmpty()) {
+                    calculationResult = operand.toInt()
+                }
 
+                operator = "*"
+                operand = ""
+            }
             R.id.btn_equals -> {
                 if (operator.isNotEmpty() && operand.isNotEmpty()) {
                     calculate()
                     txtResult.text = calculationResult.toString()
-
-                    operator = "="
-                    operand = ""
                 }
+                operator = "="
+                operand = ""
             }
         }
     }
@@ -156,6 +167,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnDot = findViewById(R.id.btn_dot)
         btnPlus = findViewById(R.id.btn_plus)
         btnMinus = findViewById(R.id.btn_minus)
+        btnMultiply = findViewById(R.id.btn_multiply)
+        btnDivision = findViewById(R.id.btn_division)
         btnEquals = findViewById(R.id.btn_equals)
     }
 
@@ -175,6 +188,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnDot.setOnClickListener(this)
         btnPlus.setOnClickListener(this)
         btnMinus.setOnClickListener(this)
+        btnMultiply.setOnClickListener(this)
+        btnDivision.setOnClickListener(this)
         btnEquals.setOnClickListener(this)
     }
 
