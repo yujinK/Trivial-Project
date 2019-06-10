@@ -22,9 +22,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var btnSign: Button
     lateinit var btnDot: Button
     lateinit var btnPlus: Button
-    var operator: String = ""
-    var operand: String = ""
-    var calculationResult: Int = 0
+    lateinit var btnMinus: Button
+    lateinit var btnEquals: Button
+    var operator: String = ""       //연산자 저장
+    var operand: String = ""        //피연산자 저장
+    var calculationResult: Int = 0  //이전 계산 결과 저장
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +43,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         when (v.id) {
-            R.id.btn_zero -> {
+            R.id.btn_zero -> if (operand.isNotEmpty()) {
                 operand += "0"
                 txtResult.text = operand
             }
@@ -93,15 +95,37 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     txtResult.text = operand + "."
                 }
             R.id.btn_plus -> {
-                if (operator.isNotEmpty()) {
+                if (operator.isNotEmpty() && operand.isNotEmpty()) {
                     calculate()
                     txtResult.text = calculationResult.toString()
-                } else {
+                } else if (operand.isNotEmpty()) {
                     calculationResult = operand.toInt()
                 }
 
                 operator = "+"
                 operand = ""
+            }
+            R.id.btn_minus -> {
+                if (operator.isNotEmpty() && operand.isNotEmpty()) {
+                    calculate()
+                    txtResult.text = calculationResult.toString()
+                } else if (operand.isNotEmpty()) {
+                    calculationResult = operand.toInt()
+                }
+
+                operator = "-"
+                operand = ""
+            }
+            //TODO: 연산자 계산
+
+            R.id.btn_equals -> {
+                if (operator.isNotEmpty() && operand.isNotEmpty()) {
+                    calculate()
+                    txtResult.text = calculationResult.toString()
+
+                    operator = "="
+                    operand = ""
+                }
             }
         }
     }
@@ -131,6 +155,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnSign = findViewById(R.id.btn_sign)
         btnDot = findViewById(R.id.btn_dot)
         btnPlus = findViewById(R.id.btn_plus)
+        btnMinus = findViewById(R.id.btn_minus)
+        btnEquals = findViewById(R.id.btn_equals)
     }
 
     private fun setOnClicks() {
@@ -148,6 +174,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnSign.setOnClickListener(this)
         btnDot.setOnClickListener(this)
         btnPlus.setOnClickListener(this)
+        btnMinus.setOnClickListener(this)
+        btnEquals.setOnClickListener(this)
     }
 
     //TODO: Number Format - Comma
