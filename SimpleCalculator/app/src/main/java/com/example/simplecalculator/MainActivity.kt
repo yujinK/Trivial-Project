@@ -40,12 +40,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         var result: String = txtResult.text.toString()
-        if (result.equals("0") && operator.isEmpty()) {
+        if (result.equals("0") && operand.isEmpty()) {
             operand = ""
         }
 
         when (v.id) {
-            R.id.btn_zero -> {
+            R.id.btn_zero -> if (operand.isNotEmpty()) {
                 operand += "0"
                 txtResult.text = operand
             }
@@ -87,8 +87,8 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             }
             R.id.btn_clear -> {
                 operator = ""
-                operand = "0"
-                txtResult.text = operand
+                operand = ""
+                txtResult.text = "0"
                 calculationResult = 0
             }
             R.id.btn_dot ->
@@ -98,55 +98,44 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                     txtResult.text = operand + "."
                 }
             R.id.btn_plus -> {
-                if (operator.isNotEmpty() && operand.isNotEmpty()) {
-                    calculate()
-                    txtResult.text = calculationResult.toString()
-                } else if (operand.isNotEmpty()) {
-                    calculationResult = operand.toInt()
-                }
-
+                calculate(R.id.btn_plus)
                 operator = "+"
                 operand = ""
             }
             R.id.btn_minus -> {
-                if (operator.isNotEmpty() && operand.isNotEmpty()) {
-                    calculate()
-                    txtResult.text = calculationResult.toString()
-                } else if (operand.isNotEmpty()) {
-                    calculationResult = operand.toInt()
-                }
-
+                calculate(R.id.btn_minus)
                 operator = "-"
                 operand = ""
             }
             R.id.btn_multiply -> {
-                if (operator.isNotEmpty() && operand.isNotEmpty()) {
-                    calculate()
-                    txtResult.text = calculationResult.toString()
-                } else if (operand.isNotEmpty()) {
-                    calculationResult = operand.toInt()
-                }
-
+                calculate(R.id.btn_multiply)
                 operator = "*"
                 operand = ""
             }
+            R.id.btn_division -> {
+                calculate(R.id.btn_division)
+                operator = "/"
+                operand = ""
+            }
             R.id.btn_equals -> {
-                if (operator.isNotEmpty() && operand.isNotEmpty()) {
-                    calculate()
-                    txtResult.text = calculationResult.toString()
-                }
+                calculate(R.id.btn_equals)
                 operator = "="
                 operand = ""
             }
         }
     }
 
-    private fun calculate() {
-        when (operator) {
-            "+" -> calculationResult += operand.toInt()
-            "-" -> calculationResult -= operand.toInt()
-            "*" -> calculationResult *= operand.toInt()
-            "/" -> calculationResult /= operand.toInt()
+    private fun calculate(id: Int) {
+        if (operator.isNotEmpty() && operand.isNotEmpty()) {
+            when (operator) {
+                "+" -> calculationResult += operand.toInt()
+                "-" -> calculationResult -= operand.toInt()
+                "*" -> calculationResult *= operand.toInt()
+                "/" -> calculationResult /= operand.toInt()
+            }
+            txtResult.text = calculationResult.toString()
+        } else if (operand.isNotEmpty() && id != R.id.btn_equals) {
+            calculationResult = operand.toInt()
         }
     }
 
