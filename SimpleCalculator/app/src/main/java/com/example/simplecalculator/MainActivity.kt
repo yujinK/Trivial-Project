@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         var result: String = txtResult.text.toString()
-        if (result.equals("0") && operand.isEmpty()) {
+        if (result.compareTo("0") == 0 && operand.isEmpty()) {
             operand = ""
         }
 
