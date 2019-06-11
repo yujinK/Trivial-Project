@@ -1,10 +1,14 @@
 package com.example.simplecalculator
 
+import android.content.Context
+import android.os.Build
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import java.text.NumberFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var txtResult: TextView
@@ -47,43 +51,43 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         when (v.id) {
             R.id.btn_zero -> if (operand.isNotEmpty()) {
                 operand += "0"
-                txtResult.text = operand
+                txtResult.text = setNumberFormat(operand)
             }
             R.id.btn_one -> {
                 operand += "1"
-                txtResult.text = operand
+                txtResult.text = setNumberFormat(operand)
             }
             R.id.btn_two -> {
                 operand += "2"
-                txtResult.text = operand
+                txtResult.text = setNumberFormat(operand)
             }
             R.id.btn_three -> {
                 operand += "3"
-                txtResult.text = operand
+                txtResult.text = setNumberFormat(operand)
             }
             R.id.btn_four -> {
                 operand += "4"
-                txtResult.text = operand
+                txtResult.text = setNumberFormat(operand)
             }
             R.id.btn_five -> {
                 operand += "5"
-                txtResult.text = operand
+                txtResult.text = setNumberFormat(operand)
             }
             R.id.btn_six -> {
                 operand += "6"
-                txtResult.text = operand
+                txtResult.text = setNumberFormat(operand)
             }
             R.id.btn_seven -> {
                 operand += "7"
-                txtResult.text = operand
+                txtResult.text = setNumberFormat(operand)
             }
             R.id.btn_eight -> {
                 operand += "8"
-                txtResult.text = operand
+                txtResult.text = setNumberFormat(operand)
             }
             R.id.btn_nine -> {
                 operand += "9"
-                txtResult.text = operand
+                txtResult.text = setNumberFormat(operand)
             }
             R.id.btn_clear -> {
                 operator = ""
@@ -95,7 +99,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 if (operand.isEmpty()) {
                     txtResult.text = "0."
                 } else {
-                    txtResult.text = operand + "."
+                    txtResult.text = setNumberFormat(operand + ".")
                 }
             R.id.btn_plus -> {
                 calculate(R.id.btn_plus)
@@ -133,7 +137,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 "*" -> calculationResult *= operand.toInt()
                 "/" -> calculationResult /= operand.toInt()
             }
-            txtResult.text = calculationResult.toString()
+            txtResult.text = setNumberFormat(calculationResult.toString())
         } else if (operand.isNotEmpty() && id != R.id.btn_equals) {
             calculationResult = operand.toInt()
         }
@@ -182,19 +186,17 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnEquals.setOnClickListener(this)
     }
 
-    //TODO: Number Format - Comma
-//    private fun setNumberFormat(s: String): String {
-//        var currentLocale: Locale = getCurrentLocales(applicationContext)
-//        var str: String = NumberFormat.getNumberInstance(currentLocale).format(Integer.parseInt(s))
-//
-//        return str
-//    }
-//
-//    private fun getCurrentLocales(context: Context): Locale {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-//            return context.resources.configuration.locales.get(0)
-//        } else {
-//            return context.resources.configuration.locale
-//        }
-//    }
+    //TODO: Number Format - Comma (Double 처리되게 수정)
+    private fun setNumberFormat(s: String): String {
+        var currentLocale: Locale = getCurrentLocales(applicationContext)
+        return NumberFormat.getNumberInstance(currentLocale).format(Integer.parseInt(s))
+    }
+
+    private fun getCurrentLocales(context: Context): Locale {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            return context.resources.configuration.locales.get(0)
+        } else {
+            return context.resources.configuration.locale
+        }
+    }
 }
