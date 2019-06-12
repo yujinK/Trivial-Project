@@ -25,6 +25,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var btnMinus: Button
     lateinit var btnMultiply: Button
     lateinit var btnDivision: Button
+    lateinit var btnRatio: Button
     lateinit var btnEquals: Button
     var operator: String = ""       //연산자 저장
     var operand: String = ""        //피연산자 저장
@@ -99,6 +100,18 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 txtResult.text = "0"
                 calculationResult = 0.0
             }
+            R.id.btn_sign -> if (operand.isNotEmpty()) {
+                if (operand.contains(".")) {
+                    var operandDecimal: String = operand.split(".")[0]
+                    var belowDecimalPoint: String = operand.split(".")[1]
+                    var result: String = (-1 * operandDecimal.toInt()).toString()
+                    operand = "$result.$belowDecimalPoint"
+                    txtResult.text = Util.setNumberFormat(result, v.context) + "." + belowDecimalPoint
+                } else {
+                    operand = (-1 * operand.toInt()).toString()
+                    txtResult.text = Util.setNumberFormat(operand, v.context)
+                }
+            }
             R.id.btn_dot ->
                 if (operand.isEmpty()) {
                     txtResult.text = "0."
@@ -127,6 +140,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 operator = "/"
                 operand = ""
             }
+            R.id.btn_ratio -> {
+                calculate(R.id.btn_ratio)
+                operator = "%"
+                operand = ""
+            }
             R.id.btn_equals -> {
                 calculate(R.id.btn_equals)
                 operator = "="
@@ -142,6 +160,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 "-" -> calculationResult -= operand.toDouble()
                 "*" -> calculationResult *= operand.toDouble()
                 "/" -> calculationResult /= operand.toDouble()
+                "%" -> calculationResult %= operand.toDouble()
             }
             txtResult.text = Util.setNumberFormat(calculationResult.toString(), applicationContext)
         } else if (operand.isNotEmpty() && id != R.id.btn_equals) {
@@ -168,6 +187,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnMinus = findViewById(R.id.btn_minus)
         btnMultiply = findViewById(R.id.btn_multiply)
         btnDivision = findViewById(R.id.btn_division)
+        btnRatio = findViewById(R.id.btn_ratio)
         btnEquals = findViewById(R.id.btn_equals)
     }
 
@@ -189,6 +209,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         btnMinus.setOnClickListener(this)
         btnMultiply.setOnClickListener(this)
         btnDivision.setOnClickListener(this)
+        btnRatio.setOnClickListener(this)
         btnEquals.setOnClickListener(this)
     }
 }
