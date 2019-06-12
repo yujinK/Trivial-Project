@@ -32,7 +32,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     lateinit var btnEquals: Button
     var operator: String = ""       //연산자 저장
     var operand: String = ""        //피연산자 저장
-    var calculationResult: Int = 0  //이전 계산 결과 저장
+    var calculationResult: Double = 0.0  //이전 계산 결과 저장
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,7 +51,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         when (v.id) {
             R.id.btn_zero -> if (operand.isNotEmpty()) {
                 operand += "0"
-                txtResult.text = setNumberFormat(operand)
+                if (operand.contains(".")) {
+                    var operandDecimal: String = operand.split(".")[0]
+                    var belowDecimalPoint: String = operand.split(".")[1]
+                    txtResult.text = setNumberFormat(operandDecimal) + "." + belowDecimalPoint
+                } else {
+                    txtResult.text = setNumberFormat(operand)
+                }
+            } else {
+                txtResult.text = "0"
             }
             R.id.btn_one -> {
                 operand += "1"
@@ -93,13 +101,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 operator = ""
                 operand = ""
                 txtResult.text = "0"
-                calculationResult = 0
+                calculationResult = 0.0
             }
             R.id.btn_dot ->
                 if (operand.isEmpty()) {
                     txtResult.text = "0."
+                    operand = "0."
                 } else {
-                    txtResult.text = setNumberFormat(operand + ".")
+                    txtResult.text = setNumberFormat(operand) + "."
+                    operand += "."
                 }
             R.id.btn_plus -> {
                 calculate(R.id.btn_plus)
@@ -132,14 +142,14 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private fun calculate(id: Int) {
         if (operator.isNotEmpty() && operand.isNotEmpty()) {
             when (operator) {
-                "+" -> calculationResult += operand.toInt()
-                "-" -> calculationResult -= operand.toInt()
-                "*" -> calculationResult *= operand.toInt()
-                "/" -> calculationResult /= operand.toInt()
+                "+" -> calculationResult += operand.toDouble()
+                "-" -> calculationResult -= operand.toDouble()
+                "*" -> calculationResult *= operand.toDouble()
+                "/" -> calculationResult /= operand.toDouble()
             }
             txtResult.text = setNumberFormat(calculationResult.toString())
         } else if (operand.isNotEmpty() && id != R.id.btn_equals) {
-            calculationResult = operand.toInt()
+            calculationResult = operand.toDouble()
         }
     }
 
@@ -189,7 +199,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     //TODO: Number Format - Comma (Double 처리되게 수정)
     private fun setNumberFormat(s: String): String {
         var currentLocale: Locale = getCurrentLocales(applicationContext)
-        return NumberFormat.getNumberInstance(currentLocale).format(Integer.parseInt(s))
+        return NumberFormat.getNumberInstance(currentLocale).format(s.toDouble())
     }
 
     private fun getCurrentLocales(context: Context): Locale {
