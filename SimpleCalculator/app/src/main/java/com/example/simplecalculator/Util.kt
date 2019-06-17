@@ -10,7 +10,9 @@ class Util {
         //Number Format with Comma
         @JvmStatic fun setNumberFormat(s: String, context: Context): String {
             var currentLocale: Locale = getCurrentLocales(context)
-            return NumberFormat.getNumberInstance(currentLocale).format(s.toDouble())
+            var nf: NumberFormat = NumberFormat.getInstance(currentLocale)
+            nf.maximumFractionDigits = Integer.MAX_VALUE    //소수점 자리수
+            return nf.format(s.toDouble())
         }
 
         @JvmStatic fun getCurrentLocales(context: Context): Locale {
