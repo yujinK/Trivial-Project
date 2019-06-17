@@ -46,7 +46,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         }
 
         when (v.id) {
-            R.id.btn_zero -> if (operand.isNotEmpty()) {
+            R.id.btn_zero -> if (operand.isNotEmpty() && operand.length < 16) {
                 operand += "0"
                 if (operand.contains(".")) {
                     var operandDecimal: String = operand.split(".")[0]
@@ -58,39 +58,39 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
             } else {
                 txtResult.text = "0"
             }
-            R.id.btn_one -> {
+            R.id.btn_one -> if (operand.length < 16) {
                 operand += "1"
                 txtResult.text = Util.setNumberFormat(operand, v.context)
             }
-            R.id.btn_two -> {
+            R.id.btn_two -> if (operand.length < 16) {
                 operand += "2"
                 txtResult.text = Util.setNumberFormat(operand, v.context)
             }
-            R.id.btn_three -> {
+            R.id.btn_three -> if (operand.length < 16) {
                 operand += "3"
                 txtResult.text = Util.setNumberFormat(operand, v.context)
             }
-            R.id.btn_four -> {
+            R.id.btn_four -> if (operand.length < 16) {
                 operand += "4"
                 txtResult.text = Util.setNumberFormat(operand, v.context)
             }
-            R.id.btn_five -> {
+            R.id.btn_five -> if (operand.length < 16) {
                 operand += "5"
                 txtResult.text = Util.setNumberFormat(operand, v.context)
             }
-            R.id.btn_six -> {
+            R.id.btn_six -> if (operand.length < 16) {
                 operand += "6"
                 txtResult.text = Util.setNumberFormat(operand, v.context)
             }
-            R.id.btn_seven -> {
+            R.id.btn_seven -> if (operand.length < 16) {
                 operand += "7"
                 txtResult.text = Util.setNumberFormat(operand, v.context)
             }
-            R.id.btn_eight -> {
+            R.id.btn_eight -> if (operand.length < 16) {
                 operand += "8"
                 txtResult.text = Util.setNumberFormat(operand, v.context)
             }
-            R.id.btn_nine -> {
+            R.id.btn_nine -> if (operand.length < 16) {
                 operand += "9"
                 txtResult.text = Util.setNumberFormat(operand, v.context)
             }
@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 if (operand.isEmpty()) {
                     txtResult.text = "0."
                     operand = "0."
-                } else {
+                } else if (operand.length < 16) {
                     txtResult.text = Util.setNumberFormat(operand, v.context) + "."
                     operand += "."
                 }
