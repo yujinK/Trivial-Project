@@ -25,6 +25,7 @@
                 app:autoSizePresetSizes="@array/autosize_text_sizes"
                 android:textColor="@color/white"
                 android:gravity="right|bottom"
+                android:paddingLeft="25dp"
                 android:paddingRight="25dp"/>
 
     </LinearLayout>
