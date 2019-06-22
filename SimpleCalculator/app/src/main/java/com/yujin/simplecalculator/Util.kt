@@ -1,4 +1,4 @@
-package com.example.simplecalculator
+package com.yujin.simplecalculator
 
 import android.content.Context
 import android.os.Build

@@ -1,4 +1,4 @@
-package com.example.simplecalculator
+package com.yujin.simplecalculator
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

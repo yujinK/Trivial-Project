@@ -1,4 +1,4 @@
-package com.example.simplecalculator
+package com.yujin.simplecalculator
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
