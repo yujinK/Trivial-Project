@@ -6,7 +6,7 @@ This is my simple Android project that I develop while studying Kotlin.
 
 
 
- :one: **Simple Calculator**
+ ### 1. Simple Calculator
 
 <img width="30" height="30" src="https://user-images.githubusercontent.com/42233535/60489136-94861a00-9cde-11e9-8d43-b63096df7d8d.png">[Play Store](<https://play.google.com/store/apps/details?id=com.yujin.simplecalculator>)
 
